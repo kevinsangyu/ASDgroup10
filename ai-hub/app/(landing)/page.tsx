@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-const LandingPage = () => {
+export default function Home() {
   return (
     <div className="landing-page">
       <div className="content">
@@ -49,7 +49,6 @@ const LandingPage = () => {
         }
       `}</style>
     </div>
-  );
-};
+  )
 
-export default LandingPage;
+};
