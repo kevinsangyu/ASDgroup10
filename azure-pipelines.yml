@@ -18,6 +18,6 @@ steps:
 - script: |
     npm install
     npm i next
-    npm build
+    npm run build
   displayName: 'npm install and build'
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
