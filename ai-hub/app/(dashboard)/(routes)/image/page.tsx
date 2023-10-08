@@ -10,8 +10,14 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const ImagePage = () => {
+  const [images, setImages] = useState<string[]>([]);
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -24,7 +30,20 @@ const ImagePage = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      setImages([]);
+      console.log(values);
+
+      const response = await axios.post('/api/image', values);
+      const urls = response.data.map((image: { url: string }) => image.url);
+
+      setImages(urls);
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      router.refresh();
+    }
+    
   }
 
   return (
