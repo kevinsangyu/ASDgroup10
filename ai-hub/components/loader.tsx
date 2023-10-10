@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/image"
 
 export const Loader = () => {
     return (
@@ -7,12 +7,12 @@ export const Loader = () => {
                 <Image
                     alt="logo"
                     fill
-                    src="/logo.png"
+                    src="/loader.png"
                 />
             </div>
             <p className="text-sm text-muted-foreground">
-                Steve the Antfish is thinking...
+                Generating...
             </p>
         </div>
     )
-};
+}
