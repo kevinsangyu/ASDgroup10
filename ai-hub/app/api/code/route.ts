@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
 
 //new api instance with API key from .env file
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.RJ_OPENAI_API_KEY });
 
 // context message to tell the model what to focus on
 const instructionMessage: OpenAI.Chat.ChatCompletionMessage = {
