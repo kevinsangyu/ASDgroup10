@@ -25,6 +25,7 @@ const ImagePage = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    // the image generation is the only one which needs property values like this.
     defaultValues: {
       prompt: "",
       amount: "1",
@@ -36,9 +37,11 @@ const ImagePage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      // we don't keep track of previous generated content so we just reset the images and the prompt.
       setImages([]);
       console.log(values);
 
+      // send values to the api call.
       const response = await axios.post('/api/image', values);
       const urls = response.data.map((image: { url: string }) => image.url);
 
@@ -48,11 +51,11 @@ const ImagePage = () => {
     } finally {
       router.refresh();
     }
-    
   }
 
   return (
     <div>
+
       <Heading
         title="Image Generation"
         description="Generate an image with a prompt."
@@ -60,24 +63,15 @@ const ImagePage = () => {
         iconColor="text-pink-700"
         bgColor="bg-pink-700/10"
       />
+
       <div className="px-4 lg:px-8">
         <div>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="
-                        rounded-lg
-                        border
-                        w-full
-                        p-4
-                        px-3
-                        md:px-6
-                        focus-within:shadow-sm
-                        grid
-                        grid-cols-12
-                        gap-2
-                        "
+              className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2"
             >
+
               <FormField
                 name="prompt"
                 render={({ field }) => (
@@ -93,6 +87,7 @@ const ImagePage = () => {
                   </FormItem>
                 )}
               />
+
               <FormField
               control={form.control}
                 name="amount"
@@ -121,6 +116,7 @@ const ImagePage = () => {
                   </FormItem>
                   )}
               />
+
               <FormField
               control={form.control}
                 name="resolution"
@@ -149,9 +145,11 @@ const ImagePage = () => {
                   </FormItem>
                   )}
               />
+
               <Button className="col-span-12 lg:col-span-2 w-full" disabled={isLoading}>
                 Generate
               </Button>
+              
             </form>
           </Form>
         </div>
