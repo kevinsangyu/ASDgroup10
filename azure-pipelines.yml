@@ -1,25 +1,23 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- main
+- master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '16.x'
+    versionSpec: '18.x'
   displayName: 'Install Node.js'
 
 - script: |
     npm install
-  displayName: 'npm install'
-  workingDirectory: `$./ai-hub`
-
-- script: |
+    npm i next
     npm run build
-  displayName: 'npm build'
+  displayName: 'npm install and build'
+  workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
