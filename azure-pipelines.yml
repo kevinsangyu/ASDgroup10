@@ -15,9 +15,20 @@ steps:
     versionSpec: '18.x'
   displayName: 'Install Node.js'
 
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: ‘.env’
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: $(Agent.TempDirectory)
+    Contents: ‘**\.env’
+    TargetFolder: $(Build.SourcesDirectory)/ai-hub
+
 - script: |
     npm install
     npm i next
     npm run build
   displayName: 'npm install and build'
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
+  
