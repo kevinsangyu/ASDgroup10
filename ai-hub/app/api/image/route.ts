@@ -45,6 +45,6 @@ export async function POST(
         return NextResponse.json(response.data);
     } catch (error) {
         console.log("[IMAGE_ERROR]", error);
-        return new NextResponse("Internal error", { status: 500 });
+        return new NextResponse("Internal error" + error.message, { status: 500 });
     }
 }
