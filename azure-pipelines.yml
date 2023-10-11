@@ -28,6 +28,16 @@ steps:
 - script: |
     npm install
     npm install next
+
+  displayName: 'npm install'
+  workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
+  
+- script: |
+    npm run test
+  displayName: 'jest testing'
+  workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
+
+- script: |
     npm run build
-  displayName: 'npm install and build'
+  displayName: 'npm build'
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
