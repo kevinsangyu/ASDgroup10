@@ -2,10 +2,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Home from './page';
 
-
 // Mocking the next/link since it won't work outside of a Next.js app context.
-jest.mock('next/link', () => ({ children }: { children: React.ReactNode }) => children);
-
+jest.mock('next/link', () => {
+    return ({ children }: { children: React.ReactNode }) => children;
+});
+  
 describe('<Home />', () => {
 
   it('renders without crashing', () => {
