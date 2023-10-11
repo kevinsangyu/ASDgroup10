@@ -18,26 +18,28 @@ steps:
 - task: DownloadSecureFile@1
   inputs:
     secureFile: '.env'
+  displayName: 'Download .env file from library'
 
 - task: CopyFiles@2
   inputs:
     SourceFolder: $(Agent.TempDirectory)
     Contents: '**/.env'
     TargetFolder: $(Build.SourcesDirectory)/ai-hub
+  displayName: 'Copy .env file to project source'
 
 - script: |
     npm install
     npm install next
 
-  displayName: 'npm install'
+  displayName: 'Install npm'
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
   
 - script: |
     npm run test
-  displayName: 'jest testing'
+  displayName: 'Unit testing with Jest'
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
 
 - script: |
     npm run build
-  displayName: 'npm build'
+  displayName: 'Build project'
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
