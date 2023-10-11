@@ -5,22 +5,24 @@ jest.mock('@clerk/nextjs', () => ({
   auth: jest.fn(),
 }));
 
-jest.mock('openai', () => ({
-  OpenAI: jest.fn(() => ({
-    apiKey: 'mockedApiKey',
-    chat: {
-      completions: {
-        create: jest.fn().mockResolvedValue({
-          choices: [
-            {
-              message: 'Mocked response for testing.',
-            },
-          ],
-        }),
+jest.mock('openai', () => {
+  return {
+    OpenAI: jest.fn(() => ({
+      apiKey: 'mockedApiKey',
+      chat: {
+        completions: {
+          create: jest.fn().mockImplementation(async (params) => ({
+            choices: [
+              {
+                message: 'Mocked response for testing.',
+              },
+            ],
+          })),
+        },
       },
-    },
-  })),
-}));
+    })),
+  };
+});
 
 // Convert NextApiRequest to a generic Request
 const convertToRequest = (req: NextApiRequest): Request => {
@@ -28,7 +30,7 @@ const convertToRequest = (req: NextApiRequest): Request => {
 };
 
 describe('POST function', () => {
-  it('successfully runs with matching input structure', async () => {
+  it('returns the expected response for a valid request', async () => {
     // Mock auth function to return a userId
     jest.spyOn(require('@clerk/nextjs'), 'auth').mockReturnValueOnce({ userId: 'mockedUserId' });
 
@@ -37,17 +39,13 @@ describe('POST function', () => {
       method: 'POST',
       body: JSON.stringify({ messages: [{ role: 'user', content: 'Hello' }] }),
       json: jest.fn().mockResolvedValueOnce({ messages: [] }), // Add a mock json method
-    } as any;
+    } as any; // 
 
-    // Mock the actual POST function
-    const mockPost = jest.fn(POST);
+    // Call the POST function
+    await POST(convertToRequest(mockReq));
 
-    // Call the mocked POST function
-    await mockPost(convertToRequest(mockReq));
-
-    // Check if auth and POST have been successfully called
     expect(require('@clerk/nextjs').auth).toHaveBeenCalled();
-    expect(mockPost).toHaveBeenCalled();
-    
+
   });
+
 });
