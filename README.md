@@ -5,7 +5,7 @@ Current proposed project is an AI Hub website
 
 Tech Stack: Next.js 13, React, Tailwind, Prise, Clerk Auth, Stripe
 
-How to start the server
+How to start the dev server
 
 cd into ai-hub folder
 
@@ -13,3 +13,8 @@ cd into ai-hub folder
 and then 
 ``` npm run dev ```
 
+How to start testing using Jest
+
+cd into ai-hub folder
+
+``` npm run test ```
