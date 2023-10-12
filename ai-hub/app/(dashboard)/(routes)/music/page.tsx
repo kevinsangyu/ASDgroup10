@@ -15,9 +15,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
 
+
+import { FaQuestionCircle } from "react-icons/fa"; // Assuming you're using Font Awesome for the question mark icon
+import SupportConsole from "@/components/SupportConsole";
+
 const MusicPage = () => {
     const router = useRouter();
     const [music, setMusic] = useState<string>();
+    const [isSupportConsoleOpen, setIsSupportConsoleOpen] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -43,9 +48,12 @@ const MusicPage = () => {
         }
     }
 
+    const toggleSupportConsole = () => {
+        setIsSupportConsoleOpen(!isSupportConsoleOpen);
+    };
+    
     return (
         <div>
-
             <Heading
                 title="Music generation"
                 description="Enter a prompt to generate music!"
@@ -59,7 +67,8 @@ const MusicPage = () => {
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(onSubmit)}
-                            className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2">
+                            className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2"
+                        >
                             <FormField
                                 name="prompt"
                                 render={({ field }) => (
@@ -82,22 +91,34 @@ const MusicPage = () => {
                     </Form>
                 </div>
                 <div className="space-y-4 mt-4">
-                        {isLoading && (
-                            <div className="p-8
-                            rounded-lg w-full flex items-centre justify-centre bg-muted">
-                                <Loader />
-                                </div>
-                        )}
-                        {!music && !isLoading && (
-                            <Empty label="No music generated." />
-                        )}
-                        {music && (
-                            <audio controls className="w-full mt-8">
-                                <source src={music} type="audio/mpeg" />
-                            </audio>
+                    {isLoading && (
+                        <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+                            <Loader />
+                        </div>
                     )}
-                    </div>
+                    {!music && !isLoading && (
+                        <Empty label="No music generated." />
+                    )}
+                    {music && (
+                        <audio controls className="w-full mt-8">
+                            <source src={music} type="audio/mpeg" />
+                        </audio>
+                    )}
+                </div>
             </div>
+
+            {/* Floating button */}
+            <div className="fixed bottom-8 right-8">
+                <button
+                    onClick={toggleSupportConsole}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                >
+                    <FaQuestionCircle size={24} />
+                </button>
+            </div>
+
+            {/* Support Console */}
+            {isSupportConsoleOpen && <SupportConsole onClose={() => setIsSupportConsoleOpen(false)} />}
         </div>
     );
 }
