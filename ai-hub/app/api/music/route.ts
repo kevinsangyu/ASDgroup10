@@ -5,11 +5,7 @@ import Replicate from "replicate";
 
 //
 const replicate = new Replicate({
-<<<<<<< HEAD
-    auth: process.env.MM_REPLICATE_API_KEY
-=======
-    auth: process.env.MM_REPLICATE_API_TOKEN
->>>>>>> main
+    auth: process.env.MM_REPLICATE_API_KEY,
 });
 
 export async function POST(
