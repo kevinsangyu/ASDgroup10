@@ -18,10 +18,15 @@ import { Loader } from "@/components/loader"
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 
+//Support box imports
+import { FaQuestionCircle } from "react-icons/fa";
+import SupportConsole from "@/components/SupportConsole";
 
 const ImagePage = () => {
   const [images, setImages] = useState<string[]>([]);
   const router = useRouter();
+  //Support box
+  const [isSupportConsoleOpen, setIsSupportConsoleOpen] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,6 +57,11 @@ const ImagePage = () => {
       router.refresh();
     }
   }
+
+    //support box
+  const toggleSupportConsole = () => {
+    setIsSupportConsoleOpen(!isSupportConsoleOpen);
+  };
 
   return (
     <div>
@@ -189,6 +199,18 @@ const ImagePage = () => {
           </div>
         </div>
       </div>
+      {/* Floating button */}
+      <div className="fixed bottom-8 right-8">
+        <button
+          onClick={toggleSupportConsole}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        >
+          <FaQuestionCircle size={24} />
+        </button>
+      </div>
+
+      {/* Support Console */}
+      {isSupportConsoleOpen && <SupportConsole onClose={() => setIsSupportConsoleOpen(false)} />}
     </div>
   );
 }
