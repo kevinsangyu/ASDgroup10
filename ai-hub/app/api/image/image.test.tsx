@@ -31,16 +31,11 @@ describe('POST function', () => {
       json: jest.fn().mockResolvedValueOnce({ response: [] }),
     } as any;
 
-    // create a mock of the image gen POST function
-    const mockPost = jest.fn(POST);
-
     // call the POST function with the mock request
-    await mockPost(convertToRequest(mockReq));
+    await POST(convertToRequest(mockReq));
 
     // check that the auth function was called
     expect(require('@clerk/nextjs').auth).toHaveBeenCalled();
 
-    // check that the POST function was called
-    expect(mockPost).toHaveBeenCalled();
   });
 });
