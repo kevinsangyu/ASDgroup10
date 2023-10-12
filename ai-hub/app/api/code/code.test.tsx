@@ -1,10 +1,11 @@
 import { POST } from './route';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+//mock clerk auth
 jest.mock('@clerk/nextjs', () => ({
   auth: jest.fn(),
 }));
-
+//mock openai
 jest.mock('openai', () => {
   return {
     OpenAI: jest.fn(() => ({
