@@ -5,6 +5,11 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Code, Image, MessageSquare, Music, Video } from "lucide-react";
 
+//Support box imports
+import { FaQuestionCircle } from "react-icons/fa";
+import SupportConsole from "@/components/SupportConsole";
+import React, { useState } from "react";
+
 const tools = [
   {
     label: "Conversation",
@@ -45,6 +50,13 @@ const tools = [
 
 const DashboardPage = () => {
   const router = useRouter();
+      //Support box
+      const [isSupportConsoleOpen, setIsSupportConsoleOpen] = useState(false);
+
+      //support box
+    const toggleSupportConsole = () => {
+      setIsSupportConsoleOpen(!isSupportConsoleOpen);
+  };
   return (
     <>
       <div className="mb-8 space-y-4">
@@ -52,23 +64,22 @@ const DashboardPage = () => {
           Welcome to AI Hub{' '}
           <span className="animate-waving-hand">👋</span>
         </h2>
-        <p className="text-muted-foreground font-light text-sm
-        md:text-lg text-center">
+        <p className="text-muted-foreground font-light text-sm md:text-lg text-center">
           Play with the most comprehensive AI platform
         </p>
       </div>
       <div className="px-4 md:px-20 lg:px-32 space-y-4">
         {tools.map((tool) => (
           <Card 
-           onClick={() => router.push(tool.href)}
-           key={tool.href}
-           className="p-4 border-black/5 flex items-center
-           justify-between hover:shadow-md transition
-           cursor-pointer"
+            onClick={() => router.push(tool.href)}
+            key={tool.href}
+            className="p-4 border-black/5 flex items-center
+            justify-between hover:shadow-md transition
+            cursor-pointer"
           >
             <div className="flex items-center gap-x-4">
               <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
-                <tool.icon className={cn("w-8 h-8", tool.color)}/>
+                {React.createElement(tool.icon, { className: cn("w-8 h-8", tool.color) })}
               </div>
               <div className="font-semibold">
                 {tool.label}
@@ -78,6 +89,19 @@ const DashboardPage = () => {
           </Card>
         ))}
       </div>
+      
+      {/* Floating button */}
+      <div className="fixed bottom-8 right-8">
+        <button
+          onClick={toggleSupportConsole}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        >
+          <FaQuestionCircle size={24} />
+        </button>
+      </div>
+
+      {/* Support Console */}
+      {isSupportConsoleOpen && <SupportConsole onClose={() => setIsSupportConsoleOpen(false)} />}
     </>
   );
 };
