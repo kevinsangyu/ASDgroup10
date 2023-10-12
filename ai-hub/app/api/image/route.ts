@@ -1,7 +1,7 @@
 
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 
 
 const openai = new OpenAI({
