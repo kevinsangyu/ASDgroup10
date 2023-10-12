@@ -3,6 +3,9 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import Replicate from "replicate";
 
+import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
+
+
 // Unlike most of our content generation tools, we use Replicate instead of OpenAI. This is because OpenAI does not yet have a video generator.
 const replicate = new Replicate({
     auth: process.env.KY_REPLICATE_API_KEY,
@@ -28,6 +31,12 @@ export async function POST(
             return new NextResponse("Prompt is required", {status: 400 });
         }
 
+        const freeTrial = await checkApiLimit();
+
+        if (!freeTrial) {
+            return new NextResponse("Free trial has expired.", { status: 403});
+        }
+
         // this is just a link to the specific AI model we will be using, which is written by anotherjesse and is called zeroscope.
         const response = await replicate.run(
             "anotherjesse/zeroscope-v2-xl:9f747673945c62801b13b84701c783929c0ee784e4748ec062204894dda1a351",
@@ -37,6 +46,8 @@ export async function POST(
               }
             }
           );
+
+        await increaseApiLimit();
 
         return NextResponse.json(response);
     } catch (error) {
