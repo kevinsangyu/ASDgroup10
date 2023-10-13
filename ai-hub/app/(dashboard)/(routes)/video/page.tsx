@@ -14,10 +14,17 @@ import { Empty } from "@/components/empty";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
+//Support box imports
+import { FaQuestionCircle } from "react-icons/fa";
+import SupportConsole from "@/components/SupportConsole";
 
 const VideoPage = () => {
   const router = useRouter();
   const [video, setVideo] = useState<string>();
+
+  //Support box
+  const [isSupportConsoleOpen, setIsSupportConsoleOpen] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,6 +50,11 @@ const VideoPage = () => {
       router.refresh()
     }
   }
+
+  //support box
+  const toggleSupportConsole = () => {
+    setIsSupportConsoleOpen(!isSupportConsoleOpen);
+  };
 
   return (
     <div>
@@ -98,6 +110,18 @@ const VideoPage = () => {
           )}
         </div>
       </div>
+      {/* Floating button */}
+      <div className="fixed bottom-8 right-8">
+        <button
+          onClick={toggleSupportConsole}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        >
+          <FaQuestionCircle size={24} />
+        </button>
+      </div>
+
+      {/* Support Console */}
+      {isSupportConsoleOpen && <SupportConsole onClose={() => setIsSupportConsoleOpen(false)} />}
     </div>
   );
 }

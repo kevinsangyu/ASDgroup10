@@ -20,9 +20,15 @@ import { cn } from "@/lib/utils";
 import { BotAvatar } from "@/components/bot-avatar";
 import { UserAvatar } from "@/components/user-avatar";
 
+//Support box imports
+import { FaQuestionCircle } from "react-icons/fa";
+import SupportConsole from "@/components/SupportConsole";
+
 const CodePage = () => {
     const router = useRouter();
     const [messages, setMessages] = useState<OpenAI.Chat.ChatCompletionMessage[]>([]);
+    //Support box
+    const [isSupportConsoleOpen, setIsSupportConsoleOpen] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -54,6 +60,11 @@ const CodePage = () => {
             router.refresh();
         }
     }
+
+        //support box
+    const toggleSupportConsole = () => {
+        setIsSupportConsoleOpen(!isSupportConsoleOpen);
+    };
 
     return (
         <div>
@@ -139,6 +150,18 @@ const CodePage = () => {
                     </div>
                 </div>
             </div>
+            {/* Floating button */}
+            <div className="fixed bottom-8 right-8">
+                <button
+                    onClick={toggleSupportConsole}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                >
+                    <FaQuestionCircle size={24} />
+                </button>
+            </div>
+
+            {/* Support Console */}
+            {isSupportConsoleOpen && <SupportConsole onClose={() => setIsSupportConsoleOpen(false)} />}
         </div>
     );
 }
