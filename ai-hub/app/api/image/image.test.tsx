@@ -9,7 +9,8 @@ import { NextApiRequest } from 'next';
 
 // mock the auth function,as the test process will be conducted while not logged in
 jest.mock('@clerk/nextjs', () => ({
-  auth: jest.fn(),
+  ...jest.requireActual('@clerk/nextjs'),
+  auth: jest.fn(() => ({ userId: 'mockedUserId' })),
 }));
 
 // creating generic request object from next's request class
