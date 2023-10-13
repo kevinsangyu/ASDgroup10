@@ -1,52 +1,42 @@
+// this is so that the test environment has access to process.env file for the API keys.
+// it is before the imports because when importing POST it throws an error because it cant find the api keys in the .env file
+const path = require('path');
+
+require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
+
 import { POST } from './route';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
 
-//mock clerk auth
 jest.mock('@clerk/nextjs', () => ({
-  auth: jest.fn(),
+  ...jest.requireActual('@clerk/nextjs'), // Use the actual implementation for other exports
+  auth: jest.fn(() => ({ userId: 'mockedUserId' })),
 }));
-//mock openai
-jest.mock('openai', () => {
-  return {
-    OpenAI: jest.fn(() => ({
-      apiKey: 'mockedApiKey',
-      chat: {
-        completions: {
-          create: jest.fn().mockImplementation(async (params) => ({
-            choices: [
-              {
-                message: 'Mocked response for testing.',
-              },
-            ],
-          })),
-        },
-      },
-    })),
-  };
-});
 
-// Convert NextApiRequest to a generic Request
+
+// creating generic request object from next's request class
 const convertToRequest = (req: NextApiRequest): Request => {
   return req as unknown as Request;
 };
 
+// test the image generation function to see if it accepts the given arguments and returns http status 200
 describe('POST function', () => {
-  it('returns the expected response for a valid request', async () => {
-    // Mock auth function to return a userId
+  it('successfully accepts the given arguments and validates the status of the API key', async () => {
+    // mock the auth function return a user ID
     jest.spyOn(require('@clerk/nextjs'), 'auth').mockReturnValueOnce({ userId: 'mockedUserId' });
 
-    // Create a mock request
+    // create a mock request object that emulates a POST request with the required arguments
     const mockReq: NextApiRequest = {
       method: 'POST',
-      body: JSON.stringify({ messages: [{ role: 'user', content: 'Hello' }] }),
-      json: jest.fn().mockResolvedValueOnce({ messages: [] }), // Add a mock json method
-    } as any; // 
+      json: jest.fn().mockResolvedValueOnce({ messages: [{ role: 'user', content: 'A python script to generate the first 20 prime numbers.' }] }),
+    } as any;    
 
-    // Call the POST function
-    await POST(convertToRequest(mockReq));
+    // call the POST function with the mock request
+    const response = await POST(convertToRequest(mockReq));
 
-    expect(require('@clerk/nextjs').auth).toHaveBeenCalled();
+    // expect the response of the POST function to be http status 200 (ok)
+    // status 400 means there's a missing argument
+    // status 500 means bad authorization, which usually pertains to the api key being invalid
+    expect(response.status).toBe(200);
 
-  });
-
+  }, 20000); // it actually spends time to generate so give it 12000ms timeframe
 });
