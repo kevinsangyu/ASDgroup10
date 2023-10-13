@@ -37,7 +37,6 @@ steps:
 - script: |
     npx prisma db push
     npx prisma generate
-    npx prisma studio
 
   displayName: 'Configure prisma'
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
