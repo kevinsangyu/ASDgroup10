@@ -35,7 +35,7 @@ steps:
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
   
 - script: |
-    npx prisma db push
+    npx prisma db push --force-reset
     npx prisma generate
 
   displayName: 'Configure prisma'
