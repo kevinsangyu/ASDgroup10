@@ -35,6 +35,14 @@ steps:
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
   
 - script: |
+    npx prisma db push
+    npx prisma generate
+    npx prisma studio
+
+  displayName: 'Configure prisma'
+  workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
+
+- script: |
     npm run test
   displayName: 'Unit testing with Jest'
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
