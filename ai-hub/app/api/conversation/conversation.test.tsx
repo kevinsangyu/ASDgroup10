@@ -38,5 +38,5 @@ describe('POST function', () => {
     // status 500 means bad authorization, which usually pertains to the api key being invalid
     expect(response.status).toBe(200);
 
-  }, 20000); // it actually spends time to generate so give it 12000ms timeframe
+  }, 60000); // it actually spends time to generate so give it 12000ms timeframe
 });
