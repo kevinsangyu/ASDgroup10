@@ -18,8 +18,10 @@ import axios from "axios";
 
 import { FaQuestionCircle } from "react-icons/fa"; // Assuming you're using Font Awesome for the question mark icon
 import SupportConsole from "@/components/SupportConsole";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const MusicPage = () => {
+    const proModal = useProModal();
     const router = useRouter();
     const [music, setMusic] = useState<string>();
     const [isSupportConsoleOpen, setIsSupportConsoleOpen] = useState(false);
@@ -42,7 +44,9 @@ const MusicPage = () => {
             setMusic(response.data.audio);
             form.reset()
         } catch (error: any) {
-            console.log(error);
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         } finally {
             router.refresh()
         }
