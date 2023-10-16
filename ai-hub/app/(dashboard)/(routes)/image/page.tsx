@@ -21,8 +21,10 @@ import Image from "next/image";
 //Support box imports
 import { FaQuestionCircle } from "react-icons/fa";
 import SupportConsole from "@/components/SupportConsole";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const ImagePage = () => {
+  const proModal = useProModal();
   const [images, setImages] = useState<string[]>([]);
   const router = useRouter();
   //Support box
@@ -52,7 +54,9 @@ const ImagePage = () => {
 
       setImages(urls);
     } catch (error: any) {
-      console.log(error);
+      if (error?.response?.status === 403) {
+          proModal.onOpen();
+      }
     } finally {
       router.refresh();
     }
