@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { useProModal } from "@/hooks/use-pro-modal";
 import {
   Dialog,
@@ -8,12 +9,21 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "./dialog";
-import { Badge } from "./badge";
-import { MessageSquare, Code, Video, Music, Image, Check, Zap } from "lucide-react";
-import { Card } from "./card";
+} from "./ui/dialog";
+import { Badge } from "./ui/badge";
+import {
+  MessageSquare,
+  Code,
+  Video,
+  Music,
+  Image,
+  Check,
+  Zap,
+} from "lucide-react";
+import { Card } from "./ui/card";
 import { cn } from "@/lib/utils";
-import { Button } from "./button";
+import { Button } from "./ui/button";
+import { useState } from "react";
 
 const tools = [
   {
@@ -50,6 +60,20 @@ const tools = [
 
 export const ProModal = () => {
   const proModal = useProModal();
+  const [laoding, setLoading] = useState(false);
+
+  const onSubscribe = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("/api/stripe");
+
+      window.location.href = response.data.url;
+    } catch (error) {
+      console.log(error, "STRIPE_CLIENT_ERROR");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <Dialog open={proModal.isOpen} onOpenChange={proModal.onClose}>
@@ -73,9 +97,7 @@ export const ProModal = () => {
                   <div className={cn("p-2 w-fit rounder-md", tool.bgColor)}>
                     <tool.icon className={cn("w-6 h-6", tool.color)} />
                   </div>
-                  <div className="font-semibold text-sm">
-                    {tool.label}
-                  </div>
+                  <div className="font-semibold text-sm">{tool.label}</div>
                 </div>
                 <Check className="text-primary w-5 h-5" />
               </Card>
@@ -83,13 +105,9 @@ export const ProModal = () => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button
-            size="lg"
-            variant="premium"
-            className="w-full"
-          >
+          <Button onClick={onSubscribe} size="lg" variant="premium" className="w-full">
             Upgrade
-            <Zap className="w-4 h-4 ml-2 fill-white"/>
+            <Zap className="w-4 h-4 ml-2 fill-white" />
           </Button>
         </DialogFooter>
       </DialogContent>
