@@ -56,6 +56,7 @@ ai-hub/app/api/music
 
 **Customer Support**  
 ai-hub/app/(dashboard)/(routes) (every page has floating support button)
+ai-hub/components/SupportConsole.tsx
 
 ### William Herman
 **Pro Subscription**  

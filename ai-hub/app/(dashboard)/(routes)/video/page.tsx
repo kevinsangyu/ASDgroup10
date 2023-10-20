@@ -17,8 +17,10 @@ import axios from "axios";
 //Support box imports
 import { FaQuestionCircle } from "react-icons/fa";
 import SupportConsole from "@/components/SupportConsole";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const VideoPage = () => {
+  const proModal = useProModal();
   const router = useRouter();
   const [video, setVideo] = useState<string>();
 
@@ -45,7 +47,9 @@ const VideoPage = () => {
       setVideo(response.data[0]);
       form.reset()
     } catch (error: any) {
-      console.log(error);
+      if (error?.response?.status === 403) {
+          proModal.onOpen();
+      }
     } finally {
       router.refresh()
     }

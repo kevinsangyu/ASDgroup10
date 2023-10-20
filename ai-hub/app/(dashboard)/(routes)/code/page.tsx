@@ -23,8 +23,10 @@ import { UserAvatar } from "@/components/user-avatar";
 //Support box imports
 import { FaQuestionCircle } from "react-icons/fa";
 import SupportConsole from "@/components/SupportConsole";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const CodePage = () => {
+    const proModal = useProModal();
     const router = useRouter();
     const [messages, setMessages] = useState<OpenAI.Chat.ChatCompletionMessage[]>([]);
     //Support box
@@ -54,8 +56,9 @@ const CodePage = () => {
 
             form.reset();
         } catch (error: any) {
-            //use this for subscription errors
-            console.log(error);
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         } finally {
             router.refresh();
         }
