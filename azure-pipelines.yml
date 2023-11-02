@@ -67,3 +67,11 @@ steps:
     ArtifactName: 'Release'
     publishLocation: 'Container'
   displayName: 'Publish artifact'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure for Students(279184f0-5f10-4442-a140-afa4338fac02)'
+    appType: 'webApp'
+    WebAppName: 'ai-hub'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
