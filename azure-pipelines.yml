@@ -51,31 +51,3 @@ steps:
     npm run build
   displayName: 'Build project'
   workingDirectory: '$(Build.SourcesDirectory)/ai-hub'
-
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/ai-hub'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-  displayName: 'Create build artifact'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Release'
-    publishLocation: 'Container'
-  displayName: 'Publish artifact'
-
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure for Students(279184f0-5f10-4442-a140-afa4338fac02)'
-    appType: 'webApp'
-    WebAppName: 'ai-hub'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-    enableCustomDeployment: true
-    DeploymentType: 'zipDeploy'
-    RemoveAdditionalFilesFlag: true
-  displayName: 'Deploy to App Service'
