@@ -59,3 +59,11 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
+  displayName: 'Create build artifact'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(Major).$(Minor).$(Patch).$(Build.BuildId)'
+    publishLocation: 'Container'
+  displayName: 'Publish artifact'
