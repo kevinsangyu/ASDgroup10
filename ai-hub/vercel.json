@@ -1,9 +1,6 @@
 {
     "functions": {
-        "api/video/route.ts": {
-            "maxDuration": 200
-        },
-        "api/music/route.ts": {
+        "app/api/video/route.ts": {
             "maxDuration": 300
         }
     }
