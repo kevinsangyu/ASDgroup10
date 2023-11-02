@@ -42,6 +42,8 @@ ai-hub/app/api/conversation
 **Image Generation**  
 ai-hub/app/(dashboard)/(routes)/image  
 ai-hub/app/api/image
+ai-hub/components/empty.tsx
+ai-hub/components/loader.tsx
 
 **Video Generation**  
 ai-hub/app/(dashboard)/(routes)/video  
@@ -54,6 +56,7 @@ ai-hub/app/api/music
 
 **Customer Support**  
 ai-hub/app/(dashboard)/(routes) (every page has floating support button)
+ai-hub/components/SupportConsole.tsx
 
 ### William Herman
 **Pro Subscription**  
