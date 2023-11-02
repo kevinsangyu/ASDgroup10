@@ -76,6 +76,6 @@ steps:
     WebAppName: 'ai-hub'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     enableCustomDeployment: true
-    DeploymentType: 'webDeploy'
+    DeploymentType: 'zipDeploy'
     RemoveAdditionalFilesFlag: true
   displayName: 'Deploy to App Service'
