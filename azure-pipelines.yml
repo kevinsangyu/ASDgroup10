@@ -74,7 +74,7 @@ steps:
     azureSubscription: 'Azure for Students(279184f0-5f10-4442-a140-afa4338fac02)'
     appType: 'webApp'
     WebAppName: 'ai-hub'
-    packageForLinux: '''$(Build.ArtifactStagingDirectory)/**/*.zip'''
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     enableCustomDeployment: true
     DeploymentType: 'webDeploy'
     RemoveAdditionalFilesFlag: true
