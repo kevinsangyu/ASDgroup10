@@ -1,14 +1,5 @@
 {
     "functions": {
-        "app/api/conversation/route.ts": {
-            "maxDuration": 300
-        },
-        "app/api/code/route.ts": {
-            "maxDuration": 300
-        },
-        "app/api/image/route.ts": {
-            "maxDuration": 300
-        },
         "app/api/video/route.ts": {
             "maxDuration": 300
         },
