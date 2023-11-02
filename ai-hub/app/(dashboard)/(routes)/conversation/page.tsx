@@ -74,7 +74,7 @@ const ConversationPage = () => {
       setIsRegenerate(true);
       const userMessage: OpenAI.Chat.ChatCompletionMessage = {
         role: "user",
-        content: "Generating a new result",
+        content: "Generating a new result from the previous prompt",
       };
 
       const newMessages = [...messages, userMessage];
