@@ -42,6 +42,8 @@ ai-hub/app/api/conversation
 **Image Generation**  
 ai-hub/app/(dashboard)/(routes)/image  
 ai-hub/app/api/image
+ai-hub/components/empty.tsx
+ai-hub/components/loader.tsx
 
 **Video Generation**  
 ai-hub/app/(dashboard)/(routes)/video  
