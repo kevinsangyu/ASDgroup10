@@ -1,11 +1,8 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Code, Image, MessageSquare, Music, Video } from "lucide-react";
-
-//Support box imports
 import { FaQuestionCircle } from "react-icons/fa";
 import SupportConsole from "@/components/SupportConsole";
 import React, { useState } from "react";
@@ -46,17 +43,18 @@ const tools = [
     bgColor: "bg-orange-500/10",
     href: "/music"
   },
-]
+];
 
 const DashboardPage = () => {
   const router = useRouter();
-      //Support box
-      const [isSupportConsoleOpen, setIsSupportConsoleOpen] = useState(false);
+  // Support box
+  const [isSupportConsoleOpen, setIsSupportConsoleOpen] = useState(false);
 
-      //support box
-    const toggleSupportConsole = () => {
-      setIsSupportConsoleOpen(!isSupportConsoleOpen);
+  // Support box
+  const toggleSupportConsole = () => {
+    setIsSupportConsoleOpen(!isSupportConsoleOpen);
   };
+
   return (
     <>
       <div className="mb-8 space-y-4">
@@ -70,7 +68,7 @@ const DashboardPage = () => {
       </div>
       <div className="px-4 md:px-20 lg:px-32 space-y-4">
         {tools.map((tool) => (
-          <Card 
+          <Card
             onClick={() => router.push(tool.href)}
             key={tool.href}
             className="p-4 border-black/5 flex items-center
@@ -81,15 +79,13 @@ const DashboardPage = () => {
               <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
                 {React.createElement(tool.icon, { className: cn("w-8 h-8", tool.color) })}
               </div>
-              <div className="font-semibold">
-                {tool.label}
-              </div>
+              <div className="font-semibold">{tool.label}</div>
             </div>
-            <ArrowRight className="w-5 h-5"/>
+            <ArrowRight className="w-5 h-5" />
           </Card>
         ))}
       </div>
-      
+
       {/* Floating button */}
       <div className="fixed bottom-8 right-8">
         <button
@@ -102,6 +98,23 @@ const DashboardPage = () => {
 
       {/* Support Console */}
       {isSupportConsoleOpen && <SupportConsole onClose={() => setIsSupportConsoleOpen(false)} />}
+
+          {/* Footer with "use client" */}
+          <div className="footer text-muted-foreground">
+            © [Developed by ASD Group 10] [2023]
+          </div>
+
+            {/* Inline styling for the components */}
+            <style jsx>{`
+              .footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                background-color: #f5f5f5; /* Optional background color */
+          
+              }
+      `}</style>
     </>
   );
 };
