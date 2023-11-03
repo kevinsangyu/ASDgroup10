@@ -206,6 +206,22 @@ const ConversationPage = () => {
       {isSupportConsoleOpen && (
         <SupportConsole onClose={() => setIsSupportConsoleOpen(false)} />
       )}
+      {/* Footer with "use client" */}
+                <div className="footer text-muted-foreground">
+            © [Developed by ASD Group 10] [2023]
+          </div>
+
+            {/* Inline styling for the components */}
+            <style jsx>{`
+              .footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                background-color: #f5f5f5; /* Optional background color */
+          
+              }
+      `}</style>
     </div>
   );
 };

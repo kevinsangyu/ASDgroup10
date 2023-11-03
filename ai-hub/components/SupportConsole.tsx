@@ -25,6 +25,9 @@ const SupportConsole: React.FC<SupportConsoleProps> = ({ onClose }) => {
                 >
                     Close
                 </button>
+                <div className="footer text-muted-foreground">
+                    © [Developed by ASD Group 10] [2023]
+                </div>
             </div>
         </div>
     );
