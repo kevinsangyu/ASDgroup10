@@ -219,7 +219,7 @@ const CodePage = () => {
       )}
       {/* Footer with "use client" */}
             <div className="footer text-muted-foreground">
-            © [Developed by ASD Group 10] [2023]
+            © [Developed by ASD Group 10] [20232023]
           </div>
 
             {/* Inline styling for the components */}
