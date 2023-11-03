@@ -136,9 +136,7 @@ const VideoPage = () => {
               .footer {
                 position: absolute;
                 bottom: 0;
-                width: 100%;
                 text-align: center;
-                background-color: #f5f5f5; /* Optional background color */
           
               }
       `}</style>
