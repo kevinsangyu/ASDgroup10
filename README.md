@@ -61,5 +61,8 @@ ai-hub/components/SupportConsole.tsx
 ### William Herman
 **Pro Subscription**  
 ai-hub/app/(dashboard)/(routes)/dashboard
+ai-hub/app/api/stripe/route.ts
 
 **Refresh**
+ai-hub/app/api/conversation/route.ts
+ai-hub/app/api/code/route.ts
