@@ -208,7 +208,7 @@ const ConversationPage = () => {
       )}
       {/* Footer with "use client" */}
                 <div className="footer text-muted-foreground">
-            © [x ASD Group 10] [2023]
+            © [Developed by ASD Group 10] [2023]
           </div>
 
             {/* Inline styling for the components */}
