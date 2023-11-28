@@ -15,5 +15,9 @@
         "app/api/music/route.ts": {
             "maxDuration": 300
         }
-    }
+    },
+    
+    "rewrites": [
+        { "source": "/(.*)", "destination": "/" }
+      ]
 }
